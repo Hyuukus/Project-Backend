@@ -1,20 +1,22 @@
-const express = require('express')
-const router= express.Router()
+const express = require('express'), 
+router= express.Router()
 const produkController=require('../controller/produkController')
 const userController=require('../controller/userController')
-const auth=require('../middleware/auth')
+const Auth=require('../middleware/auth')
 
-router.get('/user', auth, userController.getUser)
-router.post('/user', auth, userController.createUser)
-router.put('/user/:id',auth, userController.updateUser)
-router.delete('/user/:id',auth, userController.deleteUser)
-router.get('/user/:id',auth, userController.getById)
+router.get('/', Auth, produkController.getData)
+router.post('/', Auth, produkController.createData)
+router.put('/:id',Auth, produkController.updateData)
+router.delete('/:id',Auth, produkController.deleteData)
 
-router.get('/produk',produkController.getData)
-router.post('/produk',produkController.createData)
-router.put('/produk/:id',produkController.updateData)
-router.delete('/produk/:id',produkController.deleteData)
-router.get('/produk/:id',produkController.getById)
+router.get('/user', Auth, userController.getUser)
+router.post('/register', userController.createUser)
+router.put('/user/:id',Auth, userController.updateUser)
+router.delete('/user/:id',Auth, userController.deleteUser)
 
+router.post('/login', userController.login)
+
+router.get('/user/:id',userController.getById)
+router.get('/:id',produkController.getById)
 
 module.exports = router;
